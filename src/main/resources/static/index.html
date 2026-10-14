@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parqueadero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+        <h1>Iniciar sesión</h1>
+        <p>Usuario de prueba: <strong>admin</strong> / <strong>admin123</strong></p>
+        <form id="formLogin">
+            <label>Usuario<input type="text" id="loginUsername" required autocomplete="username"></label>
+            <label>Contraseña<input type="password" id="loginPassword" required autocomplete="current-password"></label>
+            <button type="submit" class="btn btn-dark">Entrar</button>
+        </form>
+        <p class="mensaje" id="mensajeLogin"></p>
+    </div>
+</div>
+
+<div class="app oculto" id="app">
+
+    <div class="top-nav">
+        <nav class="vista-tabs" id="vistaTabs">
+            <button type="button" class="vista-tab activa" data-vista="parqueadero">Parqueadero</button>
+            <button type="button" class="vista-tab" data-vista="mensualidades">Mensualidades</button>
+        </nav>
+        <div class="sesion-info">
+            <span id="usuarioActual"></span>
+            <button id="btnLogout" class="btn-editar-tarifa">Cerrar sesión</button>
+        </div>
+    </div>
+
+    <div class="vista" id="vistaParqueadero">
+
+    <section class="top-grid">
+        <div class="card stats-card">
+            <button id="btnOcultar" class="icon-btn eye-toggle" title="Mostrar u ocultar cifras">
+                <svg id="iconoOjo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <div class="mini-stats">
+                <div class="mini-stat"><strong id="statEntraron">0</strong><span>Entraron hoy</span></div>
+                <div class="mini-stat"><strong id="statSalieron">0</strong><span>Salieron hoy</span></div>
+                <div class="mini-stat"><strong id="statParqueados">0</strong><span>Parqueados</span></div>
+            </div>
+            <div class="money-stats">
+                <div class="money-box money-ok">
+                    <div class="money-value" id="statRecaudado">$0</div>
+                    <div class="money-label">Recaudado hoy</div>
+                </div>
+                <div class="money-box money-pending">
+                    <div class="money-value" id="statPendiente">$0</div>
+                    <div class="money-label">Pendiente por cobrar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card identity-card">
+            <h1>Parqueadero Central</h1>
+            <p>Sistema de gestión con Spring Boot</p>
+            <div class="identity-sub" id="identityCupos">—</div>
+        </div>
+
+        <div class="card clock-card">
+            <div class="clock-top">
+                <button id="btnTema" class="icon-btn" title="Cambiar a modo oscuro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+                </button>
+                <button id="btnFormato" class="pill-toggle" title="Cambiar formato de hora">24h</button>
+            </div>
+            <div class="clock-time" id="relojHora">--:--:--</div>
+            <div class="clock-date" id="relojFecha">—</div>
+        </div>
+    </section>
+
+    <section class="card hero-card">
+        <div class="hero-helper"><span class="dot"></span><span>Selecciona el tipo de vehículo e ingresa el dato</span><span class="dot"></span></div>
+
+        <div class="tipo-selector" id="tipoSelector">
+            <button type="button" class="tipo-tab activo" data-tipo="CARRO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icono-vehiculo"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2" y="13" width="20" height="5" rx="1.5"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span>Carro</span></button>
+            <button type="button" class="tipo-tab" data-tipo="MOTO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icono-vehiculo"><circle cx="5.5" cy="17" r="2.5"/><circle cx="18.5" cy="17" r="2.5"/><path d="M8 17h5l2-5h3M13 12l-2-3H7l-1.5 3"/></svg><span>Moto</span></button>
+            <button type="button" class="tipo-tab" data-tipo="BICICLETA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icono-vehiculo"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 10 8h4l-2.5 5h5l3 4.5M10 8l2 3"/></svg><span>Bicicleta</span></button>
+        </div>
+
+        <div class="plate-wrap" id="plateWrap" data-tipo="CARRO">
+            <div class="serial-header" id="serialHeader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icono-serial"><path d="M5 9h14M5 15h14M9 4 7 20M17 4l-2 16"/></svg><span>3 primeros caracteres del serial de la bicicleta</span></div>
+            <input id="placaInput" class="plate-input" maxlength="10" autocomplete="off" placeholder="ABC123">
+            <div class="plate-brand" id="plateBrand"><span class="plate-brand-mark">P</span><span>PARKING SYSTEM</span></div>
+        </div>
+
+        <div class="cedula-extra oculto" id="cedulaExtra">
+            <label for="cedulaPropietarioInput">Cédula del propietario de la bicicleta</label>
+            <input id="cedulaPropietarioInput" type="text" inputmode="numeric" maxlength="15" placeholder="1020304050" autocomplete="off">
+        </div>
+
+        <button id="btnProcesar" class="procesar-btn">
+            <span>PROCESAR</span>
+            <span class="key-hint">Enter</span>
+        </button>
+
+        <p class="hero-hint" id="heroHint">Presiona <kbd>Enter</kbd> o el botón para procesar. El sistema detectará automáticamente si es entrada o salida.</p>
+        <p class="mensaje" id="mensajeProceso"></p>
+    </section>
+
+    <section class="card tabla-card">
+        <div class="tabla-header">
+            <h2>Vehículos Parqueados <span class="badge-pill" id="badgeActivos">0 activos</span></h2>
+            <div class="buscador">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                <input id="buscarPlaca" placeholder="Buscar placa...">
+            </div>
+        </div>
+        <div class="tabla-scroll">
+            <table>
+                <thead>
+                <tr>
+                    <th>Placa / Serial</th>
+                    <th>Tipo</th>
+                    <th>Hora Entrada</th>
+                    <th>Tiempo</th>
+                    <th>Tarifa</th>
+                    <th>Monto Adeudado</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="tablaActivos"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="section-divider"><span>Configuración y reportes</span></div>
+
+    <section class="panels-secundarios">
+        <div class="card">
+            <h2>Tarifas</h2>
+            <table class="tabla-simple">
+                <thead>
+                <tr><th>Tipo</th><th>Valor/min</th><th>Tope día</th><th>Gracia</th><th></th></tr>
+                </thead>
+                <tbody id="tablaTarifas"></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Cierre de caja</h2>
+            <form id="formCierre">
+                <label>Fecha<input type="date" id="cierreFecha" required></label>
+                <button type="submit" class="btn btn-dark">Consultar cierre</button>
+            </form>
+            <div id="resultadoCierre"></div>
+        </div>
+    </section>
+
+    </div>
+
+    <div class="vista oculto" id="vistaMensualidades">
+
+    <section class="panels-secundarios">
+        <div class="card">
+            <h2>Registrar mensualidad</h2>
+            <form id="formMensualidad">
+                <label>Placa / Serial<input type="text" id="mensualidadPlaca" maxlength="6" required placeholder="ABC123"></label>
+                <label>Titular<input type="text" id="mensualidadTitular" maxlength="100" required placeholder="Nombre completo"></label>
+                <label>Desde<input type="date" id="mensualidadInicio" required></label>
+                <label>Hasta<input type="date" id="mensualidadFin" required></label>
+                <button type="submit" class="btn btn-dark">Registrar mensualidad</button>
+            </form>
+            <p class="mensaje" id="mensajeMensualidad"></p>
+        </div>
+    </section>
+
+    <section class="card tabla-card">
+        <div class="tabla-header">
+            <h2>Mensualidades registradas <span class="badge-pill" id="badgeMensualidades">0</span></h2>
+        </div>
+        <div class="tabla-scroll">
+            <table class="tabla-simple">
+                <thead>
+                <tr><th>Placa / Serial</th><th>Titular</th><th>Desde</th><th>Hasta</th><th>Estado</th></tr>
+                </thead>
+                <tbody id="tablaMensualidades"></tbody>
+            </table>
+        </div>
+    </section>
+
+    </div>
+
+</div>
+
+<div id="modalHistorial" class="modal-overlay oculto">
+    <div class="modal modal-ancho">
+        <div class="modal-header">
+            <h3>Historial de <span id="historialPlacaTexto"></span></h3>
+            <button id="btnCerrarHistorial" class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            </button>
+        </div>
+        <div id="historialContenido"></div>
+    </div>
+</div>
+
+<div id="reciboImprimir" class="recibo oculto"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1025 @@
+:root {
+    --bg: #f1f2f5;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --text-faint: #9ca3af;
+
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --orange: #ea580c;
+    --orange-bg: #fff7ed;
+    --yellow: #f2c200;
+    --yellow-dark: #8a6d00;
+    --dark-pill: #1f2937;
+    --light-pill: #e5e7eb;
+    --accent: #2563eb;
+    --red: #dc2626;
+
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+    --font: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+    --bg: #0f1115;
+    --card: #181b21;
+    --border: #2a2e37;
+    --text: #e8e9ec;
+    --text-muted: #9aa0ab;
+    --text-faint: #6b7280;
+    --green-bg: rgba(22, 163, 74, 0.08);
+    --orange-bg: rgba(234, 88, 12, 0.08);
+    --light-pill: #2a2e37;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.app {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 20px 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.vista {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.vista.oculto {
+    display: none;
+}
+
+.vista-tabs {
+    display: flex;
+    gap: 8px;
+    align-self: flex-start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px;
+    box-shadow: var(--shadow);
+}
+
+.vista-tab {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font);
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.vista-tab:hover {
+    color: var(--text);
+}
+
+.vista-tab.activa {
+    background: var(--dark-pill);
+    color: #fff;
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sesion-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ---------- Login ---------- */
+
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.login-overlay.oculto {
+    display: none;
+}
+
+.login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    width: min(360px, 100%);
+    text-align: center;
+}
+
+.login-card h1 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.login-card p {
+    margin: 0 0 18px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+}
+
+.login-card form {
+    text-align: left;
+}
+
+.app.oculto {
+    display: none;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    position: relative;
+}
+
+/* ---------- Fila superior ---------- */
+
+.top-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 0.8fr;
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .top-grid { grid-template-columns: 1fr; }
+}
+
+.icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.icon-btn:hover {
+    color: var(--text);
+    border-color: var(--text-faint);
+}
+
+/* Tarjeta de estadisticas */
+
+.stats-card .eye-toggle {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+}
+
+.mini-stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.mini-stat {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 8px;
+    text-align: center;
+}
+
+.mini-stat strong {
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.mini-stat span {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.money-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.money-box {
+    flex: 1;
+    border-radius: var(--radius-md);
+    border: 1.5px solid;
+    padding: 10px 12px;
+    text-align: center;
+}
+
+.money-ok {
+    background: var(--green-bg);
+    border-color: var(--green);
+}
+
+.money-ok .money-value {
+    color: var(--green);
+}
+
+.money-pending {
+    background: var(--orange-bg);
+    border-color: var(--orange);
+}
+
+.money-pending .money-value {
+    color: var(--orange);
+}
+
+.money-value {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.money-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.cifras-ocultas .mini-stat strong,
+.cifras-ocultas .money-value {
+    filter: blur(5px);
+    user-select: none;
+}
+
+/* Tarjeta de identidad */
+
+.identity-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.identity-card h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.identity-card p {
+    margin: 6px 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.identity-sub {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-faint);
+    font-weight: 500;
+}
+
+/* Tarjeta de reloj */
+
+.clock-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.clock-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.pill-toggle {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pill-toggle.activo {
+    background: var(--text);
+    color: var(--card);
+    border-color: var(--text);
+}
+
+.clock-time {
+    font-size: 30px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.clock-date {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+/* ---------- Tarjeta principal: ingreso de placa ---------- */
+
+.hero-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 34px 20px;
+}
+
+.hero-helper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.hero-helper .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-faint);
+}
+
+.tipo-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px;
+}
+
+.tipo-tab {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tipo-tab:hover {
+    color: var(--text);
+}
+
+.tipo-tab.activo {
+    background: var(--card);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+.icono-vehiculo {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.icono-serial {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.plate-wrap {
+    position: relative;
+    width: min(460px, 100%);
+    transition: width 0.25s ease;
+}
+
+.plate-input {
+    width: 100%;
+    background: var(--yellow);
+    border: 3px solid var(--text);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-family: var(--font);
+    font-weight: 800;
+    font-size: 44px;
+    letter-spacing: 0.1em;
+    color: #1a1a1a;
+    padding: 26px 16px 42px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+}
+
+.plate-input::placeholder {
+    color: rgba(26, 26, 26, 0.35);
+}
+
+.plate-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(242, 194, 0, 0.35);
+}
+
+.plate-brand {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--yellow-dark);
+    pointer-events: none;
+}
+
+.plate-brand-mark {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: var(--text);
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Placa de moto: mas angosta y compacta, como una placa real de moto */
+
+.plate-wrap[data-tipo="MOTO"] {
+    width: min(300px, 100%);
+}
+
+.plate-wrap[data-tipo="MOTO"] .plate-input {
+    font-size: 32px;
+    padding: 24px 12px 38px;
+}
+
+/* Bicicleta: no tiene placa, se registra con el serial del cuadro */
+
+.serial-header {
+    display: none;
+}
+
+.plate-wrap[data-tipo="BICICLETA"] {
+    width: min(400px, 100%);
+}
+
+.plate-wrap[data-tipo="BICICLETA"] .serial-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: absolute;
+    top: 14px;
+    left: 0;
+    right: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0 12px;
+}
+
+.plate-wrap[data-tipo="BICICLETA"] .plate-input {
+    background: var(--card);
+    border: 2px dashed var(--text-faint);
+    color: var(--text);
+    font-size: 34px;
+    letter-spacing: 0.2em;
+    text-transform: none;
+    padding: 46px 16px 20px;
+}
+
+.plate-wrap[data-tipo="BICICLETA"] .plate-input::placeholder {
+    color: var(--text-faint);
+}
+
+.plate-wrap[data-tipo="BICICLETA"] .plate-brand {
+    display: none;
+}
+
+.procesar-btn {
+    width: min(460px, 100%);
+    margin-top: 16px;
+    background: var(--light-pill);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.procesar-btn:hover {
+    background: var(--dark-pill);
+    color: #fff;
+    border-color: var(--dark-pill);
+}
+
+.key-hint {
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.cedula-extra {
+    width: min(460px, 100%);
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.cedula-extra.oculto {
+    display: none;
+}
+
+.cedula-extra label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.cedula-extra input {
+    font-size: 15px;
+    padding: 11px 14px;
+}
+
+.hero-hint {
+    margin: 16px 0 0;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.hero-hint kbd {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 1px 7px;
+    font-family: var(--font);
+    font-size: 11px;
+    background: var(--bg);
+}
+
+.mensaje {
+    margin: 14px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 18px;
+}
+
+.mensaje.ok { color: var(--green); }
+.mensaje.error { color: var(--red); }
+
+/* ---------- Tabla de vehiculos activos ---------- */
+
+.tabla-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.tabla-header h2 {
+    margin: 0;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-pill {
+    background: var(--light-pill);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.buscador {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    min-width: 220px;
+}
+
+.buscador svg {
+    width: 15px;
+    height: 15px;
+    color: var(--text-faint);
+    flex-shrink: 0;
+}
+
+.buscador input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font);
+    font-size: 13px;
+    color: var(--text);
+    width: 100%;
+}
+
+.tabla-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+tbody tr:hover {
+    background: var(--bg);
+}
+
+td.vacio {
+    text-align: center;
+    color: var(--text-faint);
+    padding: 30px 10px;
+    white-space: normal;
+}
+
+.placa-chip {
+    display: inline-block;
+    background: var(--yellow);
+    color: #1a1a1a;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 2px solid var(--text);
+    font-size: 13px;
+}
+
+.subtexto-celda {
+    margin-top: 3px;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.tipo-celda {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pill-tarifa {
+    background: var(--dark-pill);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.pill-estado {
+    background: var(--light-pill);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.pill-vigente {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+
+.pill-mensual {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+}
+
+.monto-celda {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.acciones-celda {
+    display: flex;
+    gap: 6px;
+}
+
+.accion-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.accion-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+.icono-dolar { font-weight: 800; font-size: 14px; line-height: 1; }
+
+.accion-cobrar { color: var(--green); }
+.accion-cobrar:hover { background: var(--green-bg); border-color: var(--green); }
+.accion-imprimir { color: var(--accent); }
+.accion-imprimir:hover { background: #eff6ff; border-color: var(--accent); }
+.accion-historial { color: var(--text-muted); }
+.accion-historial:hover { background: var(--bg); border-color: var(--text-faint); }
+
+/* ---------- Divisor de seccion ---------- */
+
+.section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--text-faint);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 6px 0;
+}
+
+.section-divider::before,
+.section-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ---------- Paneles secundarios ---------- */
+
+.panels-secundarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.panels-secundarios .card h2 {
+    margin: 0 0 14px;
+    font-size: 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+input, select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 11px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 13.5px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.btn {
+    border: none;
+    border-radius: 9px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-dark {
+    background: var(--dark-pill);
+    color: #fff;
+}
+
+.btn-dark:hover {
+    background: #111827;
+    opacity: 0.9;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-text:hover {
+    color: var(--text);
+}
+
+.tabla-simple {
+    font-size: 12.5px;
+}
+
+.tabla-simple th, .tabla-simple td {
+    padding: 8px 6px;
+}
+
+.btn-editar-tarifa {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 7px;
+    font-size: 11px;
+    padding: 4px 9px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.btn-editar-tarifa:hover {
+    color: var(--text);
+    border-color: var(--text-faint);
+}
+
+#resultadoCierre {
+    margin-top: 14px;
+    font-size: 13px;
+}
+
+#resultadoCierre .total {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--green);
+}
+
+#resultadoCierre table {
+    margin-top: 10px;
+}
+
+/* ---------- Modales ---------- */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 20px;
+}
+
+.modal-overlay.oculto {
+    display: none;
+}
+
+.modal {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    width: min(360px, 100%);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.modal-ancho {
+    width: min(560px, 100%);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal h3 {
+    margin: 0 0 16px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    text-align: left;
+}
+
+/* ---------- Recibo de impresion ---------- */
+
+.recibo.oculto {
+    display: none;
+}
+
+@media print {
+    .app, .modal-overlay { display: none !important; }
+    .recibo { display: block !important; }
+}
