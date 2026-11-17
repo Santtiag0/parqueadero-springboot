@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: parqueadero-springboot
+    runtime: docker
+    plan: free
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
