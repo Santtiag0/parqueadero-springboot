@@ -9,10 +9,11 @@ public record TarifaResponse(
         TipoVehiculo tipoVehiculo,
         BigDecimal valorMinuto,
         BigDecimal topeDia,
-        int minutosGracia
+        int minutosGracia,
+        int recargoFestivoPorcentaje
 ) {
     public static TarifaResponse desde(Tarifa tarifa) {
         return new TarifaResponse(tarifa.getTipoVehiculo(), tarifa.getValorMinuto(), tarifa.getTopeDia(),
-                tarifa.getMinutosGracia());
+                tarifa.getMinutosGracia(), tarifa.getRecargoFestivoPorcentaje());
     }
 }

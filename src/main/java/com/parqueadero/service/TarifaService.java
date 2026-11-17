@@ -21,11 +21,11 @@ public class TarifaService {
 
     @Transactional
     public Tarifa actualizar(TipoVehiculo tipoVehiculo, BigDecimal valorMinuto, BigDecimal topeDia,
-                              int minutosGracia) {
+                              int minutosGracia, int recargoFestivoPorcentaje) {
         Tarifa tarifa = tarifas.findByTipoVehiculo(tipoVehiculo)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No existe una tarifa configurada para " + tipoVehiculo));
-        tarifa.actualizar(valorMinuto, topeDia, minutosGracia);
+        tarifa.actualizar(valorMinuto, topeDia, minutosGracia, recargoFestivoPorcentaje);
         return tarifas.save(tarifa);
     }
 

@@ -33,6 +33,7 @@ public class SecurityConfig {
                     .requestMatchers("/", "/index.html", "/app.js", "/styles.css", "/favicon.ico").permitAll()
                     .requestMatchers("/api/v1/auth/login").permitAll()
                     .requestMatchers("/h2-console/**").permitAll()
+                    .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated())
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
             .exceptionHandling(e -> e.authenticationEntryPoint((request, response, ex) -> {

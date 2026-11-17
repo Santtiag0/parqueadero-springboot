@@ -322,6 +322,21 @@ body {
     font-weight: 500;
 }
 
+.banner-festivo {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--orange);
+    background: var(--orange-bg);
+    border: 1px solid var(--orange);
+    border-radius: 999px;
+    padding: 5px 14px;
+}
+
+.banner-festivo.oculto {
+    display: none;
+}
+
 /* Tarjeta de reloj */
 
 .clock-card {

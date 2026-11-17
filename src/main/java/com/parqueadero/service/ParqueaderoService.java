@@ -27,13 +27,15 @@ public class ParqueaderoService {
     private final TicketRepository tickets;
     private final TarifaRepository tarifas;
     private final MensualidadRepository mensualidades;
+    private final FestivoService festivos;
 
     public ParqueaderoService(CupoRepository cupos, TicketRepository tickets, TarifaRepository tarifas,
-                               MensualidadRepository mensualidades) {
+                               MensualidadRepository mensualidades, FestivoService festivos) {
         this.cupos = cupos;
         this.tickets = tickets;
         this.tarifas = tarifas;
         this.mensualidades = mensualidades;
+        this.festivos = festivos;
     }
 
     @Transactional
@@ -83,7 +85,8 @@ public class ParqueaderoService {
             Tarifa tarifa = tarifas.findByTipoVehiculo(ticket.getTipoVehiculo())
                     .orElseThrow(() -> new RecursoNoEncontradoException(
                             "No hay tarifa configurada para " + ticket.getTipoVehiculo()));
-            valorCobrado = CalculadoraCobro.calcular(ticket.getHoraEntrada(), horaSalida, tarifa);
+            boolean esFestivo = festivos.esFestivo(horaSalida.toLocalDate());
+            valorCobrado = CalculadoraCobro.calcular(ticket.getHoraEntrada(), horaSalida, tarifa, esFestivo);
         }
 
         ticket.registrarSalida(horaSalida, valorCobrado);

@@ -6,3 +6,6 @@ target/
 app.pid
 app.out.log
 app.err.log
+
+# Material del curso, no es parte del codigo
+*.pdf

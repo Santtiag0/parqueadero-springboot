@@ -1,7 +1,8 @@
--- Tarifas iniciales por tipo de vehiculo
-INSERT INTO tarifas (tipo_vehiculo, valor_minuto, tope_dia, minutos_gracia) VALUES ('CARRO', 120, 25000, 5);
-INSERT INTO tarifas (tipo_vehiculo, valor_minuto, tope_dia, minutos_gracia) VALUES ('MOTO', 70, 15000, 5);
-INSERT INTO tarifas (tipo_vehiculo, valor_minuto, tope_dia, minutos_gracia) VALUES ('BICICLETA', 30, 6000, 10);
+-- Tarifas iniciales por tipo de vehiculo (recargo_festivo_porcentaje se aplica
+-- cuando la hora de salida cae en un dia festivo de Colombia)
+INSERT INTO tarifas (tipo_vehiculo, valor_minuto, tope_dia, minutos_gracia, recargo_festivo_porcentaje) VALUES ('CARRO', 120, 25000, 5, 20);
+INSERT INTO tarifas (tipo_vehiculo, valor_minuto, tope_dia, minutos_gracia, recargo_festivo_porcentaje) VALUES ('MOTO', 70, 15000, 5, 20);
+INSERT INTO tarifas (tipo_vehiculo, valor_minuto, tope_dia, minutos_gracia, recargo_festivo_porcentaje) VALUES ('BICICLETA', 30, 6000, 10, 0);
 
 -- Cupos de carro: C-01 .. C-10
 INSERT INTO cupos (codigo, tipo_vehiculo, ocupado, version) VALUES ('C-01', 'CARRO', false, 0);

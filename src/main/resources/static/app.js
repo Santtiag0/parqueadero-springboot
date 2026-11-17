@@ -11,6 +11,7 @@ let activosCache = [];
 let filtroPlaca = "";
 let cifrasOcultas = false;
 let formato24h = true;
+let festivoHoy = { esFestivo: false, nombre: null };
 
 // ---------------------------------------------------------------------
 // Sesion (login con JWT)
@@ -82,7 +83,13 @@ function calcularCobroEnVivo(horaEntradaIso, tarifa) {
     let costoRestante = tarifa.valorMinuto * minutosRestantes;
     if (costoRestante > tarifa.topeDia) costoRestante = tarifa.topeDia;
 
-    return costoDias + costoRestante;
+    let total = costoDias + costoRestante;
+
+    if (festivoHoy.esFestivo && tarifa.recargoFestivoPorcentaje > 0) {
+        total = Math.round(total * (1 + tarifa.recargoFestivoPorcentaje / 100));
+    }
+
+    return total;
 }
 
 function formatearDuracion(horaEntradaIso) {
@@ -164,7 +171,8 @@ async function cargarTarifas() {
             <td>${formatoMoneda.format(tarifa.valorMinuto)}</td>
             <td>${formatoMoneda.format(tarifa.topeDia)}</td>
             <td>${tarifa.minutosGracia} min</td>
-            <td><button class="btn-editar-tarifa" data-tipo="${tarifa.tipoVehiculo}" data-minuto="${tarifa.valorMinuto}" data-tope="${tarifa.topeDia}" data-gracia="${tarifa.minutosGracia}">Editar</button></td>
+            <td>${tarifa.recargoFestivoPorcentaje}%</td>
+            <td><button class="btn-editar-tarifa" data-tipo="${tarifa.tipoVehiculo}" data-minuto="${tarifa.valorMinuto}" data-tope="${tarifa.topeDia}" data-gracia="${tarifa.minutosGracia}" data-recargo="${tarifa.recargoFestivoPorcentaje}">Editar</button></td>
         `;
         cuerpo.appendChild(fila);
     });
@@ -178,6 +186,8 @@ async function cargarTarifas() {
             if (topeDia === null) return;
             const minutosGracia = prompt("Minutos de gracia:", boton.dataset.gracia);
             if (minutosGracia === null) return;
+            const recargoFestivoPorcentaje = prompt("Recargo en dias festivos (%):", boton.dataset.recargo);
+            if (recargoFestivoPorcentaje === null) return;
             try {
                 await peticion(`${API}/tarifas/${tipo}`, {
                     method: "PUT",
@@ -186,6 +196,7 @@ async function cargarTarifas() {
                         valorMinuto: Number(valorMinuto),
                         topeDia: Number(topeDia),
                         minutosGracia: Number(minutosGracia),
+                        recargoFestivoPorcentaje: Number(recargoFestivoPorcentaje),
                     }),
                 });
                 await cargarTarifas();
@@ -243,9 +254,21 @@ async function cargarMensualidades() {
     });
 }
 
+async function cargarFestivoHoy() {
+    festivoHoy = await peticion(`${API}/festivos/hoy`);
+
+    const banner = document.getElementById("bannerFestivo");
+    if (festivoHoy.esFestivo) {
+        banner.textContent = `Hoy es festivo (${festivoHoy.nombre}): aplica recargo en la tarifa`;
+        banner.classList.remove("oculto");
+    } else {
+        banner.classList.add("oculto");
+    }
+}
+
 async function cargarTodo() {
     await cargarTarifas();
-    await Promise.all([cargarDisponibilidad(), cargarActivos(), cargarMensualidades()]);
+    await Promise.all([cargarDisponibilidad(), cargarActivos(), cargarMensualidades(), cargarFestivoHoy()]);
     await cargarCierreDeHoy();
 }
 

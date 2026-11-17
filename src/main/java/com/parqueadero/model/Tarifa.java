@@ -32,20 +32,27 @@ public class Tarifa {
     @Column(name = "minutos_gracia", nullable = false)
     private int minutosGracia;
 
+    @Column(name = "recargo_festivo_porcentaje", nullable = false)
+    private int recargoFestivoPorcentaje;
+
     protected Tarifa() {
     }
 
-    public Tarifa(TipoVehiculo tipoVehiculo, BigDecimal valorMinuto, BigDecimal topeDia, int minutosGracia) {
+    public Tarifa(TipoVehiculo tipoVehiculo, BigDecimal valorMinuto, BigDecimal topeDia, int minutosGracia,
+                  int recargoFestivoPorcentaje) {
         this.tipoVehiculo = tipoVehiculo;
         this.valorMinuto = valorMinuto;
         this.topeDia = topeDia;
         this.minutosGracia = minutosGracia;
+        this.recargoFestivoPorcentaje = recargoFestivoPorcentaje;
     }
 
-    public void actualizar(BigDecimal valorMinuto, BigDecimal topeDia, int minutosGracia) {
+    public void actualizar(BigDecimal valorMinuto, BigDecimal topeDia, int minutosGracia,
+                            int recargoFestivoPorcentaje) {
         this.valorMinuto = valorMinuto;
         this.topeDia = topeDia;
         this.minutosGracia = minutosGracia;
+        this.recargoFestivoPorcentaje = recargoFestivoPorcentaje;
     }
 
     public Long getId() {
@@ -66,5 +73,9 @@ public class Tarifa {
 
     public int getMinutosGracia() {
         return minutosGracia;
+    }
+
+    public int getRecargoFestivoPorcentaje() {
+        return recargoFestivoPorcentaje;
     }
 }
